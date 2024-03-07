@@ -46,9 +46,6 @@ public class GetStepApiController implements GetStepApi {
     }
     
     private List<JsonApiBodyResponseErrors> createResponseErrors(JsonApiBodyRequest body) {
-    	JsonApiBodyResponseErrors responseError = new JsonApiBodyResponseErrors();
-    	List<JsonApiBodyResponseErrors> responseErrorsList = new ArrayList<JsonApiBodyResponseErrors>(); 
-    	
     	ErrorDetail errorDetail = new ErrorDetail();
     	errorDetail.setCode("003");
     	errorDetail.setDetail("Step: " + body.getData().get(0).getStep() + " not supported - Expected: 3");
@@ -57,22 +54,25 @@ public class GetStepApiController implements GetStepApi {
     	errorDetail.setStatus("400");
     	errorDetail.setTitle("Step not supported");
     	
+    	JsonApiBodyResponseErrors responseError = new JsonApiBodyResponseErrors();
     	responseError.addErrorsItem(errorDetail);
+
+    	List<JsonApiBodyResponseErrors> responseErrorsList = new ArrayList<JsonApiBodyResponseErrors>(); 
     	responseErrorsList.add(responseError);
     	
     	return responseErrorsList;
     }
     
     private List<JsonApiBodyResponseSuccess> createResponseSuccess(JsonApiBodyRequest body) {
-    	GetEnigmaStepResponse responseEnigma = new GetEnigmaStepResponse();    
-        JsonApiBodyResponseSuccess responseSuccess = new JsonApiBodyResponseSuccess();
-        List<JsonApiBodyResponseSuccess> responseSuccessList = new ArrayList<JsonApiBodyResponseSuccess>();  
-        
+        GetEnigmaStepResponse responseEnigma = new GetEnigmaStepResponse();    
         responseEnigma.setHeader(body.getData().get(0).getHeader());
         responseEnigma.setStep(body.getData().get(0).getStep());
         responseEnigma.setStepDescription("Close the door");
         
+        JsonApiBodyResponseSuccess responseSuccess = new JsonApiBodyResponseSuccess();
         responseSuccess.addDataItem(responseEnigma);
+
+        List<JsonApiBodyResponseSuccess> responseSuccessList = new ArrayList<JsonApiBodyResponseSuccess>();  
         responseSuccessList.add(responseSuccess);
         
         return responseSuccessList;
