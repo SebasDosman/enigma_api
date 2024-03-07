@@ -38,27 +38,35 @@ public class GetStepApiController implements GetStepApi {
     }
 
     public ResponseEntity<?> getStep(@ApiParam(value = "request body get enigma step", required = true) @Valid @RequestBody JsonApiBodyRequest body) {
+        if (!body.getData().get(0).getStep().equalsIgnoreCase("3")) {
+        	return new ResponseEntity<>(createResponseErrors(body), HttpStatus.BAD_REQUEST);
+        }
+        
+        return new ResponseEntity<>(createResponseSuccess(body), HttpStatus.OK);
+    }
+    
+    private List<JsonApiBodyResponseErrors> createResponseErrors(JsonApiBodyRequest body) {
+    	JsonApiBodyResponseErrors responseError = new JsonApiBodyResponseErrors();
+    	List<JsonApiBodyResponseErrors> responseErrorsList = new ArrayList<JsonApiBodyResponseErrors>(); 
+    	
+    	ErrorDetail errorDetail = new ErrorDetail();
+    	errorDetail.setCode("003");
+    	errorDetail.setDetail("Step: " + body.getData().get(0).getStep() + " not supported - Expected: 3");
+    	errorDetail.setId(body.getData().get(0).getHeader().getId());
+    	errorDetail.setSource("/getStep");
+    	errorDetail.setStatus("400");
+    	errorDetail.setTitle("Step not supported");
+    	
+    	responseError.addErrorsItem(errorDetail);
+    	responseErrorsList.add(responseError);
+    	
+    	return responseErrorsList;
+    }
+    
+    private List<JsonApiBodyResponseSuccess> createResponseSuccess(JsonApiBodyRequest body) {
     	GetEnigmaStepResponse responseEnigma = new GetEnigmaStepResponse();    
         JsonApiBodyResponseSuccess responseSuccess = new JsonApiBodyResponseSuccess();
-        List<JsonApiBodyResponseSuccess> responseSuccessList = new ArrayList<JsonApiBodyResponseSuccess>();            
-        
-        if (!body.getData().get(0).getStep().equalsIgnoreCase("3")) {
-        	JsonApiBodyResponseErrors responseError = new JsonApiBodyResponseErrors();
-        	List<JsonApiBodyResponseErrors> responseErrorsList = new ArrayList<JsonApiBodyResponseErrors>(); 
-        	
-        	ErrorDetail errorDetail = new ErrorDetail();
-        	errorDetail.setCode("003");
-        	errorDetail.setDetail("Step: " + body.getData().get(0).getStep() + " not supported - Expected: 3");
-        	errorDetail.setId(body.getData().get(0).getHeader().getId());
-        	errorDetail.setSource("/getStep");
-        	errorDetail.setStatus("400");
-        	errorDetail.setTitle("Step not supported");
-        	
-        	responseError.addErrorsItem(errorDetail);
-        	responseErrorsList.add(responseError);
-        	
-        	return new ResponseEntity<>(responseErrorsList, HttpStatus.BAD_REQUEST);
-        }
+        List<JsonApiBodyResponseSuccess> responseSuccessList = new ArrayList<JsonApiBodyResponseSuccess>();  
         
         responseEnigma.setHeader(body.getData().get(0).getHeader());
         responseEnigma.setStep(body.getData().get(0).getStep());
@@ -67,6 +75,6 @@ public class GetStepApiController implements GetStepApi {
         responseSuccess.addDataItem(responseEnigma);
         responseSuccessList.add(responseSuccess);
         
-        return new ResponseEntity<>(responseSuccessList, HttpStatus.OK);
+        return responseSuccessList;
     }
 }

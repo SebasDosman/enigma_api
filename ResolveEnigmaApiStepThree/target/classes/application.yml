@@ -1,6 +1,6 @@
 server:
   contextPath: /v1/getOneEnigma
-  port: 8082
+  port: 8083
 springfox:
   documentation:
     swagger:
