@@ -2,6 +2,7 @@ package co.com.dosman.microservice.resolveEnigmaApi.api;
 
 import co.com.dosman.microservice.resolveEnigmaApi.model.ErrorDetail;
 import co.com.dosman.microservice.resolveEnigmaApi.model.GetEnigmaStepResponse;
+import co.com.dosman.microservice.resolveEnigmaApi.model.Header;
 import co.com.dosman.microservice.resolveEnigmaApi.model.JsonApiBodyRequest;
 import co.com.dosman.microservice.resolveEnigmaApi.model.JsonApiBodyResponseErrors;
 import co.com.dosman.microservice.resolveEnigmaApi.model.JsonApiBodyResponseSuccess;
@@ -12,6 +13,7 @@ import io.swagger.annotations.ApiParam;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -68,8 +70,14 @@ public class GetStepApiController implements GetStepApi {
     private List<JsonApiBodyResponseSuccess> createResponseSuccess(JsonApiBodyRequest body) {
         GetEnigmaStepResponse responseEnigma = new GetEnigmaStepResponse();    
         responseEnigma.setHeader(body.getData().get(0).getHeader());
+//        String bodyOne = "{\"data\": [{\"header\": {\"id\": \"12345\",\"type\": \"TestGiraffeRefrigerator\"},\"step\": \"1\"}]}";
+//        ResponseEntity<?> stepOne = restTemplateService.postStep("http://localhost:8081/v1/getOneEnigma/getStep", bodyOne);
         ResponseEntity<String> stepOne = restTemplateService.getStep("http://localhost:8081/v1/getOneEnigma/getStepOne");
+//        String bodyTwo = "{\"data\": [{\"header\": {\"id\": \"12345\",\"type\": \"TestGiraffeRefrigerator\"},\"step\": \"2\"}]}";
+//        ResponseEntity<?> stepTwo = restTemplateService.postStep("http://localhost:8082/v1/getOneEnigma/getStep", bodyTwo);
         ResponseEntity<String> stepTwo = restTemplateService.getStep("http://localhost:8082/v1/getOneEnigma/getStepTwo");
+//        String bodyThree = "{\"data\": [{\"header\": {\"id\": \"12345\",\"type\": \"TestGiraffeRefrigerator\"},\"step\": \"3\"}]}";
+//        ResponseEntity<?> stepThree = restTemplateService.postStep("http://localhost:8083/v1/getOneEnigma/getStep", bodyThree);
         ResponseEntity<String> stepThree = restTemplateService.getStep("http://localhost:8083/v1/getOneEnigma/getStepThree");
         responseEnigma.setAnswer(stepOne.getBody() + " - " + stepTwo.getBody() + " - " + stepThree.getBody());
         

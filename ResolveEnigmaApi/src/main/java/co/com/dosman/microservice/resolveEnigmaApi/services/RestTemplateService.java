@@ -1,14 +1,11 @@
 package co.com.dosman.microservice.resolveEnigmaApi.services;
 
-import javax.validation.Valid;
-
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.client.RestTemplate;
-
-import co.com.dosman.microservice.resolveEnigmaApi.model.JsonApiBodyRequest;
 
 
 @Service
@@ -21,5 +18,13 @@ public class RestTemplateService {
 	
 	public ResponseEntity<String> getStep(String url) {
 		return restTemplate.getForEntity(url, String.class);
+	}
+	
+	public ResponseEntity<?> postStep(String url, String body) {
+		HttpHeaders header = new HttpHeaders();
+        header.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> request= new HttpEntity<>(body, header);
+        
+		return restTemplate.postForEntity(url, request, String.class);
 	}
 }

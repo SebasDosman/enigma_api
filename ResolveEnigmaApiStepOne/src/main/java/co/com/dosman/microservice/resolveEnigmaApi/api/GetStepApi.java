@@ -29,6 +29,13 @@ public interface GetStepApi {
         consumes = { "application/json" },
         method = RequestMethod.POST)
     ResponseEntity<?> getStep(@ApiParam(value = "request body get enigma step" ,required=true )  @Valid @RequestBody JsonApiBodyRequest body);
+    @ApiOperation(value = "Get setp one enigma step API", nickname = "getStepOne", notes = "Get step one enigma step API", response = JsonApiBodyResponseSuccess.class, responseContainer = "List", tags={  })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "search results matching criteria", response = JsonApiBodyResponseSuccess.class, responseContainer = "List"),
+        @ApiResponse(code = 424, message = "bad input parameter", response = JsonApiBodyResponseErrors.class, responseContainer = "List") })
+    @RequestMapping(value = "/getStepOne",
+        produces = { "application/json" }, 
+        method = RequestMethod.GET)
     ResponseEntity<String> getStepOne();
 }
 
