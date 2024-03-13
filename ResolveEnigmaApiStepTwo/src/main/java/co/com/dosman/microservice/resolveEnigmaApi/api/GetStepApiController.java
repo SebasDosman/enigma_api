@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.validation.Valid;
@@ -43,6 +44,11 @@ public class GetStepApiController implements GetStepApi {
         }
         
         return new ResponseEntity<>(createResponseSuccess(body), HttpStatus.OK);
+    }
+    
+    @GetMapping("/getStepTwo")
+    public ResponseEntity<?> getStepOne() {
+    	return new ResponseEntity<>("Step 2: Put the giraffe in", HttpStatus.OK);
     }
     
     private List<JsonApiBodyResponseErrors> createResponseErrors(JsonApiBodyRequest body) {
