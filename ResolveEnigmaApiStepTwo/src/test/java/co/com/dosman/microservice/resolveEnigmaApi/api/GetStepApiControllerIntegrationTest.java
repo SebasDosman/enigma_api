@@ -1,9 +1,6 @@
 package co.com.dosman.microservice.resolveEnigmaApi.api;
 
 import co.com.dosman.microservice.resolveEnigmaApi.model.JsonApiBodyRequest;
-import co.com.dosman.microservice.resolveEnigmaApi.model.JsonApiBodyResponseSuccess;
-
-import java.util.*;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

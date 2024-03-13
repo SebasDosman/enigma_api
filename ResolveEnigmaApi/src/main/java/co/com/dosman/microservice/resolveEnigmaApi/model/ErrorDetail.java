@@ -3,7 +3,6 @@ package co.com.dosman.microservice.resolveEnigmaApi.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Builder;
 
 import org.springframework.validation.annotation.Validated;
 import javax.validation.constraints.*;
@@ -13,7 +12,6 @@ import javax.validation.constraints.*;
  * ErrorDetail
  */
 @Validated
-@Builder
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2024-02-27T20:55:05.287811100-05:00[America/Bogota]")
 public class ErrorDetail   {
   @JsonProperty("code")
