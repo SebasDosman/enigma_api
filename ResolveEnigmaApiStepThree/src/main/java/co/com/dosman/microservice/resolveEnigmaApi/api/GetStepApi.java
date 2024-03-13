@@ -29,4 +29,5 @@ public interface GetStepApi {
         consumes = { "application/json" },
         method = RequestMethod.POST)
     ResponseEntity<?> getStep(@ApiParam(value = "request body get enigma step" ,required=true )  @Valid @RequestBody JsonApiBodyRequest body);
+    ResponseEntity<String> getStepThree();
 }

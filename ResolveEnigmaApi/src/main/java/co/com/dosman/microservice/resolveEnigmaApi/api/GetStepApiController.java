@@ -48,9 +48,6 @@ public class GetStepApiController implements GetStepApi {
     }
     
     private List<JsonApiBodyResponseErrors> createResponseErrors(JsonApiBodyRequest body) {
-    	JsonApiBodyResponseErrors responseError = new JsonApiBodyResponseErrors();
-    	List<JsonApiBodyResponseErrors> responseErrorsList = new ArrayList<JsonApiBodyResponseErrors>(); 
-    	
     	ErrorDetail errorDetail = new ErrorDetail();
     	errorDetail.setCode("000");
     	errorDetail.setDetail("Enigma: " + body.getData().get(0).getEnigma() + " not supported - Expected: How to put a giraffe into a refrigerator?");
@@ -59,24 +56,27 @@ public class GetStepApiController implements GetStepApi {
     	errorDetail.setStatus("400");
     	errorDetail.setTitle("Enigma not supported");
     	
+    	JsonApiBodyResponseErrors responseError = new JsonApiBodyResponseErrors();
     	responseError.addErrorsItem(errorDetail);
+    	
+    	List<JsonApiBodyResponseErrors> responseErrorsList = new ArrayList<JsonApiBodyResponseErrors>(); 
     	responseErrorsList.add(responseError);
     	
     	return responseErrorsList;
     }
     
     private List<JsonApiBodyResponseSuccess> createResponseSuccess(JsonApiBodyRequest body) {
-    	GetEnigmaStepResponse responseEnigma = new GetEnigmaStepResponse();    
-        JsonApiBodyResponseSuccess responseSuccess = new JsonApiBodyResponseSuccess();
-        List<JsonApiBodyResponseSuccess> responseSuccessList = new ArrayList<JsonApiBodyResponseSuccess>();  
-        
+        GetEnigmaStepResponse responseEnigma = new GetEnigmaStepResponse();    
         responseEnigma.setHeader(body.getData().get(0).getHeader());
         ResponseEntity<String> stepOne = restTemplateService.getStep("http://localhost:8081/v1/getOneEnigma/getStepOne");
-        ResponseEntity<String> stepTwo= restTemplateService.getStep("http://localhost:8082/v1/getOneEnigma/getStepTwo");
+        ResponseEntity<String> stepTwo = restTemplateService.getStep("http://localhost:8082/v1/getOneEnigma/getStepTwo");
         ResponseEntity<String> stepThree = restTemplateService.getStep("http://localhost:8083/v1/getOneEnigma/getStepThree");
-        responseEnigma.setAnswer(stepOne.getBody() + " - " + stepTwo.getBody() + " - "+ stepThree.getBody());
+        responseEnigma.setAnswer(stepOne.getBody() + " - " + stepTwo.getBody() + " - " + stepThree.getBody());
         
+        JsonApiBodyResponseSuccess responseSuccess = new JsonApiBodyResponseSuccess();
         responseSuccess.addDataItem(responseEnigma);
+
+        List<JsonApiBodyResponseSuccess> responseSuccessList = new ArrayList<JsonApiBodyResponseSuccess>();  
         responseSuccessList.add(responseSuccess);
         
         return responseSuccessList;

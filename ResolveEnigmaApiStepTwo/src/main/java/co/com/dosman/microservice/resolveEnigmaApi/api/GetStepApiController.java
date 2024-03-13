@@ -47,7 +47,7 @@ public class GetStepApiController implements GetStepApi {
     }
     
     @GetMapping("/getStepTwo")
-    public ResponseEntity<?> getStepOne() {
+    public ResponseEntity<String> getStepTwo() {
     	return new ResponseEntity<>("Step 2: Put the giraffe in", HttpStatus.OK);
     }
     
